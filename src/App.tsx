@@ -26,6 +26,7 @@ import {
 import "mind-elixir/style";
 import "./App.css";
 import { clean, colors, theme } from "./model";
+import { exportSafePng, exportSafeSvg } from "./export";
 
 type Doc = { id: string; data: MindElixirData; updated: number };
 const KEY = "sprig-maps-v1";
@@ -252,6 +253,31 @@ export default function App() {
         return;
       }
       if (
+        target.id !== "input-box" &&
+        m.currentNode &&
+        !e.metaKey &&
+        !e.ctrlKey &&
+        !e.altKey &&
+        e.key.length === 1 &&
+        e.key !== " "
+      ) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        void m.beginEdit().then(() => {
+          const input = el.querySelector("#input-box");
+          if (input) {
+            input.textContent = e.key;
+            const range = document.createRange();
+            range.selectNodeContents(input);
+            range.collapse(false);
+            const selection = window.getSelection();
+            selection?.removeAllRanges();
+            selection?.addRange(range);
+          }
+        });
+        return;
+      }
+      if (
         target.id === "input-box" &&
         !e.shiftKey &&
         ["Tab", "Enter"].includes(e.key)
@@ -277,12 +303,21 @@ export default function App() {
     m.container.focus();
     setZoom(100);
     persist();
+    if (!m.nodeData.children?.length && m.nodeData.topic === "Ý tưởng của bạn")
+      void m.beginEdit(root);
+    let disposed = false;
+    void document.fonts.ready.then(() => {
+      if (disposed) return;
+      m.linkDiv();
+      if (m.nodeData.children?.length) m.scaleFit();
+    });
     const flush = () => {
       (el.querySelector("#input-box") as HTMLElement | null)?.blur();
       persist();
     };
     window.addEventListener("pagehide", flush);
     return () => {
+      disposed = true;
       clearTimeout(timer);
       flush();
       window.removeEventListener("pagehide", flush);
@@ -323,8 +358,8 @@ export default function App() {
               type: "application/json",
             })
           : format === "svg"
-            ? m.exportSvg()
-            : await m.exportPng();
+            ? await exportSafeSvg(m)
+            : await exportSafePng(m);
       if (!blob) throw Error();
       download(blob, `${name}.${format}`);
     } catch {
@@ -412,7 +447,12 @@ export default function App() {
         <select
           aria-label="Cỡ chữ"
           value={
-            selected?.style?.fontSize || (selected?.parent ? "20px" : "30px")
+            selected?.style?.fontSize ||
+            (selected?.parent?.parent
+              ? "18px"
+              : selected?.parent
+                ? "20px"
+                : "30px")
           }
           disabled={!selected}
           onChange={(e) => style({ fontSize: e.target.value })}
