@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#347e61" />
+    <meta name="description" content="Thông tin về dữ liệu và quyền riêng tư khi sử dụng Sprig." />
+    <title>Quyền riêng tư — Sprig</title>
+    <style>
+      :root { color-scheme: light; font-family: "DM Sans", system-ui, sans-serif; color: #35463f; background: #fcfcfa; }
+      * { box-sizing: border-box; }
+      body { margin: 0; padding: 48px 20px; background: radial-gradient(ellipse at 12% 5%, #e9f2e8 0, transparent 35%), #fcfcfa; }
+      main { width: min(100%, 760px); margin: 0 auto; padding: clamp(24px, 6vw, 54px); border: 1px solid #e8ebe3; border-radius: 20px; background: white; box-shadow: 0 18px 60px #3047280e; }
+      a { color: #347e61; }
+      .brand { display: inline-flex; align-items: center; gap: 9px; color: #34453a; font-size: 23px; font-weight: 800; text-decoration: none; letter-spacing: -1px; }
+      .mark { display: inline-grid; place-items: center; width: 32px; height: 34px; border-radius: 9px; background: #e8f2eb; color: #318365; }
+      .eyebrow { margin: 38px 0 8px; color: #879882; font-size: 11px; font-weight: 700; letter-spacing: 1.3px; text-transform: uppercase; }
+      h1 { margin: 0; color: #34453a; font-size: clamp(30px, 6vw, 42px); letter-spacing: -1.5px; }
+      h2 { margin: 30px 0 8px; color: #3d5143; font-size: 19px; letter-spacing: -.3px; }
+      p, li { color: #68766a; font-size: 15px; line-height: 1.8; }
+      p { margin: 10px 0; }
+      ul { padding-left: 22px; }
+      li + li { margin-top: 5px; }
+      .updated { margin-top: 10px; color: #99a294; font-size: 12px; }
+      .back { display: inline-block; margin-top: 28px; font-size: 14px; font-weight: 600; text-decoration: none; }
+      .back:hover { text-decoration: underline; }
+      @media (max-width: 520px) { body { padding: 14px 10px; } main { border-radius: 14px; } }
+    </style>
+  </head>
+  <body>
+    <main>
+      <a class="brand" href="/sprig/" aria-label="Sprig — về ứng dụng"><span class="mark" aria-hidden="true">✳</span>sprig</a>
+      <p class="eyebrow">Thông tin ứng dụng</p>
+      <h1>Quyền riêng tư</h1>
+      <p class="updated">Cập nhật: 30 tháng 10, 2026</p>
+      <p>Trang này mô tả dữ liệu Sprig xử lý khi bạn dùng trình chỉnh sửa mindmap, đăng nhập hoặc chia sẻ sơ đồ.</p>
+
+      <h2>Dữ liệu đăng nhập</h2>
+      <p>Khi bạn chọn “Tiếp tục với Google”, Sprig dùng Supabase Auth để xác thực tài khoản. Google cung cấp thông tin hồ sơ cơ bản được yêu cầu cho đăng nhập, gồm địa chỉ email và tên/ảnh hồ sơ nếu tài khoản cung cấp. Sprig hiển thị email để bạn nhận biết tài khoản; quyền sơ đồ được gắn với tài khoản đã xác thực. Việc Google xử lý dữ liệu tuân theo chính sách và lựa chọn quyền riêng tư của Google.</p>
+
+      <h2>Sơ đồ và chia sẻ</h2>
+      <p>Nội dung, cấu trúc và kiểu dáng mindmap được lưu trong cơ sở dữ liệu PostgreSQL của Supabase. Mỗi sơ đồ có chủ sở hữu. Chính sách Row Level Security trong database giới hạn việc đọc và sửa cho chủ sở hữu cùng những tài khoản được chia sẻ.</p>
+      <p>Khi chủ sở hữu mời người khác, Sprig lưu email được mời và vai trò “chỉ xem” hoặc “có thể sửa”. Người nhận phải đăng nhập bằng đúng email Google đã mời. Đường dẫn sơ đồ tự nó không cấp quyền truy cập. Chủ sở hữu có thể đổi vai trò hoặc thu hồi quyền trong ứng dụng.</p>
+
+      <h2>Lưu trên thiết bị</h2>
+      <p>Nếu tiếp tục ở chế độ khách, sơ đồ được lưu trong bộ nhớ cục bộ của trình duyệt trên thiết bị đó. Với tài khoản cloud, các bản nháp chưa đồng bộ cũng có thể được lưu cục bộ để khôi phục. Xóa dữ liệu trang web trong trình duyệt có thể xóa các bản cục bộ này.</p>
+
+      <h2>Dịch vụ bên thứ ba</h2>
+      <p>Sprig được phân phối qua GitHub Pages. Đăng nhập và dữ liệu cloud sử dụng Google và Supabase; các dịch vụ này có thể xử lý dữ liệu kỹ thuật cần thiết để vận hành dịch vụ theo chính sách riêng của họ. Sprig hiện không tích hợp công cụ phân tích hành vi hoặc quảng cáo.</p>
+
+      <h2>Liên hệ</h2>
+      <p>Nếu có câu hỏi về thông tin trong trang này, liên hệ <a href="mailto:thanhhaitutitu@gmail.com">thanhhaitutitu@gmail.com</a>.</p>
+      <a class="back" href="/sprig/">← Quay lại Sprig</a>
+    </main>
+  </body>
+</html>

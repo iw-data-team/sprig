@@ -129,7 +129,7 @@ export function CloudLogin({
         </button>
         <div className="cloud-login-footnote">
           <LockKeyhole size={13} />
-          Sơ đồ riêng tư; bạn quyết định chia sẻ với ai.
+          <span>Sơ đồ riêng tư; bạn quyết định chia sẻ với ai. <a href={`${import.meta.env.BASE_URL}privacy.html`} target="_blank" rel="noreferrer">Quyền riêng tư</a></span>
         </div>
       </section>
     </main>
