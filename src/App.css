@@ -121,7 +121,7 @@ main {
   font-family: Manrope, sans-serif;
   font-size: 30px;
   font-weight: 750;
-  padding: 18px 24px;
+  padding: 10px 18px;
   letter-spacing: -0.8px;
   max-width: 440px;
 }
@@ -130,11 +130,11 @@ main {
   background: transparent;
   font-size: 20px;
   font-weight: 550;
-  padding: 12px 17px;
+  padding: 5px 10px;
 }
 .map-container me-tpc {
   max-width: 340px;
-  line-height: 1.5;
+  line-height: 1.4;
   border-radius: 8px !important;
 }
 .map-container .selected {
@@ -147,7 +147,7 @@ main {
   outline-offset: 5px;
   border-radius: 8px;
   font-weight: inherit;
-  line-height: 1.5;
+  line-height: 1.4;
   box-shadow: 0 0 0 7px #fcfcfa;
 }
 .map-container .lines path,
@@ -730,4 +730,23 @@ footer {
   text-align: center;
   font-size: 13px;
   color: #52745a;
+}
+
+/* Preserve layout while replacing the selected topic with its inline editor. */
+.map-container me-tpc.editing-topic {
+  visibility: hidden;
+}
+.map-container me-parent {
+  margin: 4px 0;
+  padding: 0 var(--node-gap-x);
+}
+.map-container me-main > me-wrapper > me-parent {
+  margin: 4px 0;
+  padding: 0;
+}
+.map-container .rhs me-epd {
+  right: 9px;
+}
+.map-container .lhs me-epd {
+  left: 9px;
 }

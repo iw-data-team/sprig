@@ -26,6 +26,7 @@ import {
 import "mind-elixir/style";
 import "./App.css";
 import { clean, colors, theme } from "./model";
+import { installInlineEditor } from "./inlineEditor";
 import { exportSafePng, exportSafeSvg } from "./export";
 
 type Doc = { id: string; data: MindElixirData; updated: number };
@@ -167,9 +168,10 @@ export default function App() {
         direction,
         isFirst,
       }) => {
-        const inset = isFirst ? -8 : 26;
+        const gap = parseFloat(theme.cssVar["--node-gap-x"]);
+        const inset = isFirst ? -8 : gap - 8;
         const x = direction === "lhs" ? pL + inset : pL + pW - inset;
-        const end = direction === "lhs" ? cL + cW - 26 : cL + 26;
+        const end = direction === "lhs" ? cL + cW - gap + 8 : cL + gap - 8;
         const y = pT + pH / 2,
           ey = cT + cH / 2,
           mid = (x + end) / 2;
@@ -183,7 +185,8 @@ export default function App() {
             : m.addChild()),
       },
     });
-    m.init(structuredClone(doc.data));
+    m.init(structuredClone({ ...doc.data, theme }));
+    installInlineEditor(m);
     map.current = m;
     undoDepth.current = 0;
     redoDepth.current = 0;
