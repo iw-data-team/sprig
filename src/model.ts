@@ -25,7 +25,7 @@ export const theme = {
     "--selected": "#34a286",
     "--node-gap-x": "88px",
     "--node-gap-y": "0px",
-    "--main-gap-x": "40px",
+    "--main-gap-x": "72px",
     "--main-gap-y": "10px",
     "--topic-padding": "4px 10px",
     "--main-radius": "10px",

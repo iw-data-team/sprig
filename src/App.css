@@ -770,3 +770,8 @@ footer {
 .map-container .lhs me-epd {
   left: -13px;
 }
+
+.map-container me-main.rhs > me-wrapper > me-parent,
+.map-container me-main.lhs > me-wrapper > me-parent {
+  padding: 0;
+}
