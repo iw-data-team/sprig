@@ -27,6 +27,8 @@ import "mind-elixir/style";
 import "./App.css";
 import { clean, colors, theme } from "./model";
 import { installInlineEditor } from "./inlineEditor";
+import { mainBranch, subBranch, installBranchLayout } from "./branches";
+import { installViewport } from "./viewport";
 import { exportSafePng, exportSafeSvg } from "./export";
 
 type Doc = { id: string; data: MindElixirData; updated: number };
@@ -144,39 +146,12 @@ export default function App() {
       contextMenu: false,
       editable: true,
       allowUndo: true,
-      alignment: "nodes",
+      alignment: "root",
       newTopicName: "Ý tưởng mới",
       scaleMin: 0.25,
       scaleMax: 2.5,
-      generateMainBranch: ({ pT, pL, pW, pH, cT, cL, cW, cH, direction }) => {
-        const x = direction === "lhs" ? pL - 8 : pL + pW + 8;
-        const end = direction === "lhs" ? cL + cW + 8 : cL - 8;
-        const y = pT + pH / 2,
-          ey = cT + cH / 2,
-          mid = (x + end) / 2;
-        return `M ${x} ${y} C ${mid} ${y} ${mid} ${ey} ${end} ${ey}`;
-      },
-      generateSubBranch: ({
-        pT,
-        pL,
-        pW,
-        pH,
-        cT,
-        cL,
-        cW,
-        cH,
-        direction,
-        isFirst,
-      }) => {
-        const gap = parseFloat(theme.cssVar["--node-gap-x"]);
-        const inset = isFirst ? -8 : gap - 8;
-        const x = direction === "lhs" ? pL + inset : pL + pW - inset;
-        const end = direction === "lhs" ? cL + cW - gap + 8 : cL + gap - 8;
-        const y = pT + pH / 2,
-          ey = cT + cH / 2,
-          mid = (x + end) / 2;
-        return `M ${x} ${y} C ${mid} ${y} ${mid} ${ey} ${end} ${ey}`;
-      },
+      generateMainBranch: mainBranch,
+      generateSubBranch: subBranch,
       keypress: {
         Tab: () => void m.addChild(),
         Enter: () =>
@@ -187,6 +162,8 @@ export default function App() {
     });
     m.init(structuredClone({ ...doc.data, theme }));
     installInlineEditor(m);
+    installBranchLayout(m);
+    installViewport(m);
     map.current = m;
     undoDepth.current = 0;
     redoDepth.current = 0;
@@ -295,11 +272,6 @@ export default function App() {
       }
     };
     el.addEventListener("keydown", keydown, true);
-    const resize = new ResizeObserver(() => {
-      if (m.nodeData.children?.length) m.scaleFit();
-      else m.toCenter();
-    });
-    resize.observe(el);
     const root = m.findEle(m.nodeData.id);
     m.selectNode(root);
     m.toCenter();
@@ -309,10 +281,18 @@ export default function App() {
     if (!m.nodeData.children?.length && m.nodeData.topic === "Ý tưởng của bạn")
       void m.beginEdit(root);
     let disposed = false;
+    let interacted = false;
+    const interact = () => {
+      interacted = true;
+    };
+    const interactionTarget = el.parentElement!;
+    interactionTarget.addEventListener("pointerdown", interact);
+    interactionTarget.addEventListener("wheel", interact, { passive: true });
+    interactionTarget.addEventListener("keydown", interact);
     void document.fonts.ready.then(() => {
       if (disposed) return;
       m.linkDiv();
-      if (m.nodeData.children?.length) m.scaleFit();
+      if (!interacted && m.nodeData.children?.length) m.scaleFit();
     });
     const flush = () => {
       (el.querySelector("#input-box") as HTMLElement | null)?.blur();
@@ -324,7 +304,9 @@ export default function App() {
       clearTimeout(timer);
       flush();
       window.removeEventListener("pagehide", flush);
-      resize.disconnect();
+      interactionTarget.removeEventListener("pointerdown", interact);
+      interactionTarget.removeEventListener("wheel", interact);
+      interactionTarget.removeEventListener("keydown", interact);
       el.removeEventListener("keydown", keydown, true);
       m.destroy();
       map.current = null;

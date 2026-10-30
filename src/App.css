@@ -750,3 +750,23 @@ footer {
 .map-container .lhs me-epd {
   left: 9px;
 }
+
+/* Keep the canvas fixed to the viewport, independent of the growing tree. */
+.canvas {
+  position: absolute !important;
+}
+.map-container .rhs me-parent {
+  padding: 0 0 0 var(--node-gap-x);
+}
+.map-container .lhs me-parent {
+  padding: 0 var(--node-gap-x) 0 0;
+}
+.map-container me-main > me-wrapper > me-parent {
+  padding: 0;
+}
+.map-container .rhs me-epd {
+  right: -13px;
+}
+.map-container .lhs me-epd {
+  left: -13px;
+}

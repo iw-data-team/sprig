@@ -23,7 +23,7 @@ export const theme = {
     "--root-bgcolor": "transparent",
     "--root-border-color": "transparent",
     "--selected": "#34a286",
-    "--node-gap-x": "24px",
+    "--node-gap-x": "88px",
     "--node-gap-y": "0px",
     "--main-gap-x": "40px",
     "--main-gap-y": "10px",
