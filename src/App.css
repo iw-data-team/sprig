@@ -775,3 +775,123 @@ footer {
 .map-container me-main.lhs > me-wrapper > me-parent {
   padding: 0;
 }
+.viewer-hidden {
+  display: none !important;
+}
+.account-email {
+  font-size: 10px;
+  max-width: 130px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #7d8d80;
+}
+.role-badge {
+  font-size: 9px;
+  padding: 5px 7px;
+  border-radius: 5px;
+  background: #eef4eb;
+  color: #598064;
+  white-space: nowrap;
+}
+.role-viewer {
+  background: #f3f0e7;
+  color: #8d8052;
+}
+.sync-problem {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 165px;
+  z-index: 50;
+  background: #fff7e8;
+  border: 1px solid #ebd6b2;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px #654c1712;
+  padding: 15px 18px;
+  width: min(760px, 94vw);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.sync-problem div {
+  flex: 1;
+}
+.sync-problem strong {
+  font-size: 12px;
+  color: #86612d;
+}
+.sync-problem p {
+  font-size: 11px;
+  color: #967445;
+  line-height: 1.7;
+  margin: 5px 0;
+}
+.sync-problem button {
+  font-size: 10px;
+  background: #fff;
+  border: 1px solid #e7d4b2;
+  border-radius: 5px;
+  padding: 8px;
+  white-space: nowrap;
+}
+.migrate-local {
+  margin-bottom: 14px;
+  border: 1px solid #e3eadf;
+}
+.cloud-login-button {
+  color: #347e61 !important;
+}
+.header-actions {
+  gap: 6px;
+}
+@media (max-width: 1200px) {
+  .account-email,
+  .account-logout,
+  .role-owner {
+    display: none;
+  }
+  .topbar {
+    gap: 12px;
+    padding: 0 20px;
+  }
+  .header-actions .text-button {
+    padding: 9px;
+  }
+  .header-actions .help-toggle {
+    display: none;
+  }
+}
+@media (max-width: 760px) {
+  .role-badge {
+    display: none;
+  }
+  .cloud-login-button {
+    font-size: 10px;
+    max-width: 120px;
+    white-space: normal;
+  }
+  .header-actions .account-logout {
+    display: flex;
+  }
+  .header-actions {
+    gap: 0;
+  }
+  .sync-problem {
+    flex-wrap: wrap;
+    bottom: 165px;
+  }
+  .sync-problem div {
+    flex-basis: 100%;
+  }
+  .topbar {
+    padding: 0 10px;
+    gap: 6px;
+  }
+  .header-actions .text-button {
+    padding: 8px 5px;
+  }
+  .header-actions .primary-button {
+    padding: 8px 6px;
+  }
+}
